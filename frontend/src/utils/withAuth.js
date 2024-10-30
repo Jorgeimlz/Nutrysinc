@@ -29,7 +29,7 @@ const withAuth = (WrappedComponent, requiredRole) => {
                 setLoading(false);
             });
             return () => unsubscribe();
-        }, []);
+        }, [router]); // Incluye router aquí
 
         if (loading) return <p>Cargando...</p>;
         if (!hasAccess) return null;

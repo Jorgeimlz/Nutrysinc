@@ -1,5 +1,6 @@
 // src/components/RegisterForm.js
 import { useState } from 'react';
+import Link from 'next/link';
 import styles from './RegisterForm.module.css';
 
 const RegisterForm = ({ onSubmit, buttonText }) => {
@@ -155,7 +156,10 @@ const RegisterForm = ({ onSubmit, buttonText }) => {
             </div>
             <button type="submit" className={styles.button}>{buttonText}</button>
             <div className={styles.footerText}>
-                ¿Ya tienes una cuenta? <a href="/login" className={styles.footerLink}>Iniciar sesión</a>
+                ¿Ya tienes una cuenta?{' '}
+                <Link href="/login" className={styles.footerLink}>
+                    Iniciar sesión
+                </Link>
             </div>
         </form>
     );
