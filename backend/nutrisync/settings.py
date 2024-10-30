@@ -125,8 +125,6 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FIREBASE_CRED = os.path.join(BASE_DIR, 'firebase', 'backend-88d9f-firebase-adminsdk-i3u19-3b07b1ef31.json')
-
+FIREBASE_CRED = r"C:\Users\Jorge\Nutrysinc\firebase\backend.json"
 cred = credentials.Certificate(FIREBASE_CRED)
 initialize_app(cred)
