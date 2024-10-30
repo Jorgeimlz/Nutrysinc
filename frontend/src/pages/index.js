@@ -1,19 +1,28 @@
 // src/pages/index.js
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { auth } from '../services/firebaseConfig';
+import { auth, db } from '../services/firebaseConfig';
+import { doc, getDoc } from 'firebase/firestore';
 
 export default function Home() {
     const router = useRouter();
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        // Escucha el estado de autenticación de Firebase
-        const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+        const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
             if (currentUser) {
-                // Si el usuario está autenticado, redirige a la página de inicio
                 setUser(currentUser);
-                router.push('/dashboard'); // Cambia '/dashboard' por la ruta de tu página de usuario
+
+                // Obtener el rol del usuario desde Firestore
+                const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    if (userData.role === 'admin') {
+                        router.push('/admin/dashboard'); // Redirige al panel de admin
+                    } else {
+                        router.push('/user/dashboard'); // Redirige al panel de usuario
+                    }
+                }
             } else {
                 setUser(null); // Usuario no autenticado
             }
